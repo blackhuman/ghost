@@ -8,9 +8,11 @@ export GHOST_FILE_STORAGE="false"
 
 # define volume constants
 VOLUME_PATH="/data"
+VOLUME_CONFIG_FILE_PATH="$VOLUME_PATH/config.js"
 VOLUME_DATA_PATH="$VOLUME_PATH/data"
 VOLUME_THEMES_PATH="$VOLUME_PATH/themes"
 VOLUME_IMAGES_PATH="$VOLUME_PATH/images"
+GHOST_CONFIG_FILE_PATH="$GHOST_CONTENT/config.js"
 GHOST_DATA_PATH="$GHOST_CONTENT/data"
 GHOST_THEMES_PATH="$GHOST_CONTENT/themes"
 GHOST_IMAGES_PATH="$GHOST_CONTENT/images"
@@ -46,6 +48,7 @@ if [[ -d "$VOLUME_PATH" ]]; then
 
     create_symbolic_link "$VOLUME_DATA_PATH" "$GHOST_DATA_PATH"
     create_symbolic_link "$VOLUME_IMAGES_PATH" "$GHOST_IMAGES_PATH"
+    create_symbolic_link "$VOLUME_CONFIG_FILE_PATH" "$GHOST_CONFIG_FILE_PATH"
     chown -hR user:root "$VOLUME_PATH"
 fi
 
