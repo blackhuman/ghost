@@ -8,11 +8,11 @@ export GHOST_FILE_STORAGE="false"
 
 # define volume constants
 VOLUME_PATH="/data"
-VOLUME_CONFIG_FILE_PATH="$VOLUME_PATH/config.js"
+VOLUME_STAGE_PATH="$VOLUME_PATH/stage"
+VOLUME_STAGE_CONFIG_PATH="$VOLUME_PATH/stage/config.js"
 VOLUME_DATA_PATH="$VOLUME_PATH/data"
 VOLUME_THEMES_PATH="$VOLUME_PATH/themes"
 VOLUME_IMAGES_PATH="$VOLUME_PATH/images"
-GHOST_CONFIG_FILE_PATH="$GHOST_CONTENT/config.js"
 GHOST_DATA_PATH="$GHOST_CONTENT/data"
 GHOST_THEMES_PATH="$GHOST_CONTENT/themes"
 GHOST_IMAGES_PATH="$GHOST_CONTENT/images"
@@ -40,6 +40,7 @@ if [[ -d "$VOLUME_PATH" ]]; then
     mkdir -p "$VOLUME_DATA_PATH"
     mkdir -p "$VOLUME_THEMES_PATH"
     mkdir -p "$VOLUME_IMAGES_PATH"
+    mkdir -p "$VOLUME_STAGE_PATH"
 
     for theme in `ls $VOLUME_THEMES_PATH`
     do
@@ -48,7 +49,7 @@ if [[ -d "$VOLUME_PATH" ]]; then
 
     create_symbolic_link "$VOLUME_DATA_PATH" "$GHOST_DATA_PATH"
     create_symbolic_link "$VOLUME_IMAGES_PATH" "$GHOST_IMAGES_PATH"
-    create_symbolic_link "$VOLUME_CONFIG_FILE_PATH" "$GHOST_CONFIG_FILE_PATH"
+    
     chown -hR user:root "$VOLUME_PATH"
 fi
 
@@ -94,6 +95,10 @@ else
     fi
     
     cp "/opt/config_sqlite.js" "$GHOST_CONTENT/config.js"
+fi
+
+if [[ -f "$VOLUME_STAGE_CONFIG_PATH" ]]; then
+    cp "$VOLUME_STAGE_CONFIG_PATH" "$GHOST_CONTENT/config.js"
 fi
 
 exec "$@"
